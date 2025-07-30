@@ -1,21 +1,20 @@
-# SimpleCV（シンプルCV）
+# SimpleCV
 
 > [!WARNING]  
-> このプロジェクトは現在アクティブに保守されていません。新たにコンピュータビジョンのプロジェクトを始める場合は、以下の代替手段を検討してください：
-> - [OpenCV](https://opencv.org/) - 強力なコンピュータビジョンライブラリ。広範囲なサポートと活発なコミュニティによる開発があります。
-> - [PyTorch](https://pytorch.org/) + [TorchVision](https://pytorch.org/vision/stable/index.html) - ディープラーニングおよびビジョンタスクのためのフレームワーク。
+> このプロジェクトはもはや積極的にメンテナンスされていません。新しいコンピュータビジョンプロジェクトの場合は、以下のような代替手段を検討してください：
+> - [OpenCV](https://opencv.org/) - 幅広いサポートと活発なコミュニティ開発がある強力なコンピュータビジョンタスク用ライブラリ。
+> - [PyTorch](https://pytorch.org/) + [TorchVision](https://pytorch.org/vision/stable/index.html) - ディープラーニングとコンピュータビジョンタスクのためのフレームワーク。
 > - [TensorFlow](https://www.tensorflow.org/) - 機械学習とコンピュータビジョンのための堅牢なエコシステム。
-> - [scikit-image](https://scikit-image.org/) - Python 向けの軽量な画像処理ライブラリ。
+> - [scikit-image](https://scikit-image.org/) - Python用の軽量画像処理ライブラリ。
 >
-> 現在、更新の予定はありませんが、将来的に再開される可能性はあります。レガシープロジェクトで SimpleCV が必要な場合、本コードは現状のままで提供されます。
+> 現在のところ更新予定はありませんが、将来的にこのプロジェクトが再開される可能性があります。SimpleCVを必要とするレガシープロジェクトの場合は、コードベースは現状のまま提供されます。
 
 [![Build Status](https://travis-ci.org/sightmachine/SimpleCV.png?branch=develop)](https://travis-ci.org/sightmachine/SimpleCV)
 
----
 
-## クイックリンク：
+クイックリンク:
 
- * [概要（About）](#about)
+ * [概要](#about)
  * [インストール](#installation)
     * [Docker](#docker)
     * [Ubuntu](#ubuntu-1204)
@@ -27,88 +26,86 @@
     * [Raspberry Pi](#raspberry-pi)
  * [SimpleCVシェル](#simplecv-interactive-shell-or-how-to-run-simplecv)
  * [動画 & チュートリアル](#videos---tutorials-and-demos)
- * [モバイルでのSimpleCV（Android）](#simplecv-on-mobile-android)
+ * [モバイル版SimpleCV - Android](#simplecv-on-mobile-android)
  * [ヘルプ](#getting-help)
- * [インストール時のトラブルシューティング](#troubleshooting-installation-problems)
-    * [必須ライブラリ](#required-libraries)
-    * [オプションライブラリ](#optional-libraries)
+ * [インストールのトラブルシューティング](#troubleshooting-installation-problems)
+    * [必要なライブラリ](#required-libraries)
+    * [オプションのライブラリ](#optional-libraries)
 
----
 
 <a id="about"></a>
 ## 概要
+---------------------------
+SimpleCVを使ってコンピュータに視覚を与える、オープンソースのコンピュータビジョンフレームワーク
 
-SimpleCV はオープンソースのコンピュータビジョンフレームワークで、コンピュータに「見る」機能を与えることを目的としています。
+SimpleCVは、OpenCVとPythonプログラミング言語を使用したオープンソース機械視覚フレームワークです。
+カメラ、画像操作、特徴抽出、フォーマット変換のための簡潔で読みやすいインターフェースを提供します。私たちの使命は、一般ユーザーに基本的な機械視覚機能の包括的なインターフェースを提供し、上級ユーザーにエレガントなプログラミングインターフェースを提供することです。
 
-SimpleCV は OpenCV と Python をベースとしたオープンソースのマシンビジョンフレームワークです。カメラ操作、画像処理、特徴抽出、フォーマット変換などの機能に対して、簡潔で読みやすいインターフェースを提供します。初級者でも基本的な処理が書けるように設計されており、上級者には洗練されたプログラミング体験を提供します。
+SimpleCVが気に入った理由：
 
-SimpleCV を気に入っている理由：
+* 初心者プログラマーでも簡単な機械視覚テストを書くことができます
+* カメラ、ビデオファイル、画像、ビデオストリームはすべて相互運用可能です
+* 画像特徴の情報を簡単に抽出、並び替え、フィルタリングできます
+* 操作は高速で、覚えやすい名前が付けられています
+* 線形代数は必須ではありません
 
-* 初心者でも簡単なマシンビジョンのテストコードが書ける
-* カメラ、動画ファイル、静止画像、映像ストリームの操作が一貫している
-* 画像から得られる情報を抽出、並び替え、フィルタするのが簡単
-* 操作が高速で、名前が覚えやすい
-* 線形代数の知識は必須ではない
+SimpleCVの"Hello World"は以下の通りです：
 
-以下は SimpleCV の「Hello World」プログラムです：
+    import SimpleCV
+    camera = SimpleCV.Camera()
+    image = camera.getImage()
+    image.show()
 
-```python
-import SimpleCV
-camera = SimpleCV.Camera()
-image = camera.getImage()
-image.show()
-
-
-For more code snippets, we recommend the [SimpleCV examples website](http://examples.simplecv.org) or looking at our example scripts in [SimpleCV/examples](http://github.com/sightmachine/SimpleCV/tree/master/SimpleCV/examples)
+より多くのコードスニペットについては、[SimpleCV examplesウェブサイト](http://examples.simplecv.org)または[SimpleCV/examples](http://github.com/sightmachine/SimpleCV/tree/master/SimpleCV/examples)のサンプルスクリプトをご覧ください。
 
 ---------------------------
 <a id="installation"></a>
-## Installation
+## インストール
 
-The easiest way to install SimpleCV is with the packages for your distribution (Windows, Mac, Linux) included on the website (http://www.simplecv.org).  Although it is tested on many platforms there maybe scenarios where it just won't work with the package installer. Below is instructions on how to install, if you have problems please see the troubleshooting section at the end of this README file.
+SimpleCVをインストールする最も簡単な方法は、ウェブサイト(http://www.simplecv.org)に含まれているディストリビューション(Windows、Mac、Linux)用のパッケージを使用することです。多くのプラットフォームでテストされていますが、パッケージインストーラーで動作しないシナリオがあるかもしれません。以下にインストール方法を示します。問題が発生した場合は、このREADMEファイルの最後のトラブルシューティングセクションを参照してください。
 
 <a id="docker"></a>
 ### Docker
-This is the recommended way of installing SimpleCV as you can be sure the environment will be setup the same exact way as it's suppose to be on your machine.
+Dockerを使用すると、環境がまったく同じように設定されるため、SimpleCVをインストールする推奨方法です。
 
-*WARNING*: Using docker does not allow the webcam to work, it also doesn't work with Image.show(), so essentially requires you to use simplecv within an IPython notebook.
+*警告*: Dockerを使用するとウェブカメラは動作しません。また、Image.show()でも動作しないため、基本的にIPythonノートブック内でsimplecvを使用する必要があります。
 
-The first step is to install docker on your machine if you have not, this should work for Windows, Mac, and Linux, please follow instructions at:
+最初のステップは、まだインストールしていない場合はDockerをマシンにインストールすることです。Windows、Mac、Linuxで動作します。手順については以下を参照してください：
 <a href="https://docs.docker.com/installation/">https://docs.docker.com/installation/</a>
 
-Once docker is installed you can run simplecv as easy as (may have to run as sudo, depending on OS):
+Dockerをインストールしたら、以下を実行するだけでsimplecvを実行できます(OSによってはsudoで実行する必要があります)：
 
     docker pull sightmachine/simplecv
 
-It will probably take a little while to download, but once done just run (may need to run as sudo, depending on OS):
+ダウンロードに少し時間がかかるかもしれませんが、完了したら以下を実行します(OSによってはsudoで実行する必要があります)：
 
     docker run -p 54717:8888 -t -i sightmachine/simplecv
 
-Then just open your web browser and go to:
+次に、ウェブブラウザを開いて以下にアクセスします：
 
     http://localhost:54717
-    
-**NOTE**: If you are using a Mac or Windows it will be a little different since you will be boot2docker to run.  When you run boot2docker up it should show the ip address of the docker service.  It could be something like 192.168.59.103, but this will change as it's random.  Once you know that ip you will just go to that IP address with the correct port instead:
+
+**注**: MacまたはWindowsを使用している場合は、boot2dockerを実行する必要があるため少し異なります。boot2docker upを実行すると、dockerサービスのIPアドレスが表示されます。192.168.59.103のようなものですが、ランダムなので変更される可能性があります。IPアドレスがわかったら、代わりにそのIPアドレスと正しいポートにアクセスします：
 
     http://192.168.59.103:54717
 
-You will get a Ipython notebook inteface, start a new notebook and enter the following:
+IPythonノートブックインターフェースが表示されます。新しいノートブックを作成して以下を入力します：
 
     from SimpleCV import *
     disp = Display(displaytype='notebook')
     img = Image('simplecv')
     img.save(disp)
 
-You should now see the simplecv logo and now have a full simplecv environment setup to start playing around.
+SimpleCVロゴが表示され、SimpleCV環境が完全に設定されます。これで遊び始めることができます。
 
 <a id="ubuntu-1204"></a>
 ### Ubuntu 12.04
-Install with pip
+pipでインストール
 
 	sudo apt-get install ipython python-opencv python-scipy python-numpy python-pygame python-setuptools python-pip
 	sudo pip install https://github.com/sightmachine/SimpleCV/zipball/develop
 
-Install using clone of SimpleCV repository
+SimpleCVリポジトリのクローンを使用してインストール
 
     sudo apt-get install ipython python-opencv python-scipy python-numpy python-pygame python-setuptools git
     git clone https://github.com/sightmachine/SimpleCV.git
@@ -116,13 +113,13 @@ Install using clone of SimpleCV repository
     sudo pip install -r requirements.txt
     sudo python setup.py install
 
-then just run 'simplecv' from the shell.
+次に、シェルから'simplecv'を実行するだけです。
 
-### Virtualenv
+### 仮想環境
 
-This is how to install SimpleCV under a python virtual environment [virtualenv] (http://www.virtualenv.org).  This maybe useful in cases where you want to keep your system libraries clean and not install extra libraries.  This method has only been tested on Ubuntu 12.04, it maybe possible to port to other operating systems.
+これは、python仮想環境[virtualenv] (http://www.virtualenv.org)下でSimpleCVをインストールする方法です。システムライブラリをクリーンに保ち、余分なライブラリをインストールしたくない場合に役立ちます。この方法はUbuntu 12.04でのみテストされていますが、他のオペレーティングシステムに移植することも可能です。
 
-Run the following commands:
+以下のコマンドを実行します：
 
     sudo apt-get install python-opencv python-setuptools python-pip gfortran g++ liblapack-dev libsdl1.2-dev libsmpeg-dev mercurial
     sudo pip install virtualenv
@@ -146,35 +143,35 @@ Run the following commands:
 
 <a id="archlinux"></a>
 ### Arch Linux
-Install using pip
+pipでインストール
 
     pacman -S python2-numpy opencv2.4.4_1 python-pygame python2-setuptools ipython2 python2-pip
     pip install https://github.com/sightmachine/SimpleCV/zipball/develop
 
-Install using clone of SimpleCV repository
+SimpleCVリポジトリのクローンを使用してインストール
 
     pacman -S python2-numpy opencv2.4.4_1 python-pygame python2-setuptools ipython2
     git clone https://github.com/sightmachine/SimpleCV.git
     cd SimpleCV/
     sudo python setup.py install
 
-Install development version using aur
+AURを使用して開発バージョンをインストール
 
     yaourt -S simplecv-git
 
 <a id="fedora"></a>
 ### Fedora
-#### Fedora 20 and above
+#### Fedora 20以降
 
     sudo yum -y install python-SimpleCV
 
 #### Fedora 18
-Install with pip
+pipでインストール
 
     sudo yum -y install python-ipython opencv-python scipy numpy pygame python-setuptools python-pip
     sudo python-pip install https://github.com/sightmachine/SimpleCV/zipball/develop
 
-Install using clone of SimpleCV repository
+SimpleCVリポジトリのクローンを使用してインストール
 
     sudo yum -y install python-ipython opencv-python scipy numpy pygame python-setuptools python-pip git
     git clone https://github.com/sightmachine/SimpleCV.git
@@ -182,354 +179,58 @@ Install using clone of SimpleCV repository
     sudo python setup.py install
 
 <a id="macos">
-### Mac OS X (10.6 and above)
+### Mac OS X (10.6以降)
 </a>
 
-**General OSX Overview**
+**一般的なOSXの概要**
 
-Note: We originally tried to bundle all Mac dependencies in a superpack.  This turned out to be extremely difficult with the many differences between versions of Mac OS.  Now, with Mac, you must build from source and we will try and make it as easy as possible.  Please report a bug if you have issues.
+注：もともと、Macのすべての依存関係をスーパーパックにまとめようとしました。しかし、Mac OSのバージョン間の多くの違いにより、これは非常に困難であることが判明しました。現在、Macではソースからビルドする必要があり、できるだけ簡単にするよう努めています。問題が発生した場合はバグを報告してください。
 
 
 ---------------------------
-**Explicit (as in every step) instructions compliments of JHawkins**
+**JHawkinsによる明示的な（すべての手順の）手順**
 
-*These instructions are geared towards people who are just getting started with python development on OSX. They will walk you through setting up all the tools you need to build SimpleCV from scratch. If you don't know which instructions you want, you probably want to use these.*
+*これらの手順は、OSXでPython開発を始めたばかりの人を対象としています。SimpleCVをゼロから構築するために必要なすべてのツールを設定する手順を説明します。どの手順を使用するかわからない場合は、おそらくこれらを使用する必要があります。*
 
-Install Xcode via App Store
-Start Xcode and go to Xcode >> Preferences >> Downloads >> click Install across from Command Line Tools
-If Terminal is already running, shut it down and reopen it
-OS X's permissions on /usr/local are too restrictive and must be changed via:
+App Store経由でXcodeをインストールします
+Xcodeを起動し、Xcode >> 環境設定 >> ダウンロード >> コマンドラインツールの横にある「インストール」をクリックします
+ターミナルがすでに実行中の場合は、シャットダウンして再起動します
+OS Xの/usr/localの権限は制限が厳しすぎるため、以下を実行して変更する必要があります：
 
     sudo chown -R `whoami` /usr/local
 
-Install homebrew via Terminal using:
+ターミナル経由でhomebrewをインストールします：
 
     ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
 
-Ignore the single warning that instructs you to install Xcode's CLI tools (you did that already)
-To verify that homebrew is installed correctly and working, run:
+XcodeのCLIツールをインストールするよう指示する単一の警告は無視してください（すでにインストールしています）
+homebrewが正しくインストールされ動作していることを確認するには、以下を実行します：
 
     brew doctor
 
-Address any errors before moving on. Remember, Google is your friend.
-Note: If you run VM's on my via Parallels and run into multiple warnings related to "osxfuse" thi go to System Preferences >> FUSE for OS X >> Click Remove OSXFUSE. I can add it back later if needed.
-Once the doctor tells you that you are 'raring to brew', run:
+エラーがある場合は解決してから進んでください。Googleは友達です。
+注：Parallelsを介してVMを実行していて、"osxfuse"に関連する複数の警告が表示された場合は、システム環境設定 >> FUSE for OS X >> OSXFUSEを削除をクリックしてください。必要になったら後で追加できます。
+doctorが「raring to brew」と表示したら、以下を実行します：
 
     brew update
 
-followed by
+次に
 
     brew upgrade
 
-Install OpenCV via homebrew by running:
+homebrewを介してOpenCVをインストールするには、以下を実行します：
 
     brew tap homebrew/science
     brew install opencv
 
-Be sure to add the requested line to you ~/.bash_profile:
+~/.bash_profileに要求された行を追加してください：
 
     export PYTHONPATH="/usr/local/lib/python2.7/site-packages:$PYTHONPATH"
 
-Source your ~/.bash_profile file so that the changes take effect:
+変更を有効にするために~/.bash_profileファイルを読み込みます：
 
     source ~/.bash_profile
 
-Install Git via homebrew by running:
+homebrewを介してGitをインストールするには、以下を実行します：
 
     brew install git
-
-Install SDL dependencies (can anyone clarify this?) via homebrew by running:
-
-    brew install sdl sdl_image sdl_mixer sdl_ttf portmidi
-
-Install XQuartz from https://xquartz.macosforge.org
-Homebrew can't install smpeg at the time of this writing however there is a workaround:
-
-    brew tap homebrew/headonly
-    brew install --HEAD smpeg
-
-If you get a connection refused error, wait a minute and try again.
-Download PIL:
-
-    curl -O -L http://effbot.org/media/downloads/Imaging-1.1.7.tar.gz
-
-In the unpacked folder:
-
-    python setup.py build --force
-    sudo python setup.py install
-
-Manually create a few PIL symlinks:
-
-    sudo ln -s /usr/local/lib/python2.6/site-packages/cv.so /Library/Python/2.6/site-packages/cv.so
-    sudo ln -s /usr/local/lib/python2.6/site-packages/PIL /Library/Python/2.6/site-packages/PIL
-    sudo ln -s /usr/local/lib/python2.6/site-packages/cv2.so /Library/Python/2.6/site-packages/cv2.so
-    sudo ln -s /usr/local/lib/python2.6/site-packages/cv.py /Library/Python/2.6/site-packages/cv.py
-
-Install PIP by running:
-
-    sudo easy_install pip
-
-Install the Scipy Superpack from http://fonnesbeck.github.com/ScipySuperpack/
-Install Mercurial via homebrew by running:
-
-     brew install mercurial
-
-Install pygame via PIP by running:
-
-    sudo pip install hg+http://bitbucket.org/pygame/pygame
-
-Install svgwrite by running:
-
-    sudo pip install svgwrite
-
-**Note:** SimpleCV's developers made a change (for the better) here that I am including, however everything up to this point is 100% guaranteed to work, because it's exactly what I did. Keeping true to that, I'll present both options. *We both suggest using the develop branch.*
-**Developer's Instructions** Install SimpleCV from the git repo and then run setup.
-
-    git clone https://github.com/sightmachine/SimpleCV.git
-    cd SimpleCV/
-    sudo python setup.py install
-
-**JHawkins' Instructions** Install SimpleCV via PIP by running:
-
-    sudo pip install https://github.com/sightmachine/SimpleCV/zipball/master
-
-Test by running simplecv in the command line:
-
-    simplecv
-
-If it starts (it should!) be sure to check out:
-
-     example()
-
---------------------------------
-**Lion Take Two**
-
-*This is the abridged set of the instructions. It assumes you have most of the common OSX developer tools installed like brew and pip.
-If you don't know what Brew or Pip are you probably want to use the instructions above. For OSX Lion make sure you install Mercurial (aka hg - brew install hg). There may be errors in pygame associated with not installing X11,
-if you encounter this problem please submit an issue on github.*
-
-Before you begin installing SimpleCV make sure you have the folliwng tools installed.
-
-* Install Xcode https://developer.apple.com/xcode/ and then run the Xcode installer.
-* Install homebrew https://github.com/mxcl/homebrew/wiki/installation
-
-
-Commands (for Lion)::
-
-    mkdir ~/Code
-    cd ~/Code
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.github.com/gist/323731)"
-    brew tap homebrew/science
-	brew install opencv
-    brew install git
-    brew tap homebrew/headonly
-    brew install --HEAD smpeg
-    brew install sdl sdl_image sdl_mixer sdl_ttf portmidi
-    ARCHFLAGS="-arch i386 -arch x86_64" brew install PIL
-    ln -s /usr/local/lib/python2.7/site-packages/cv.so /Library/Python/2.7/site-packages/cv.so
-    sudo ln -s /usr/local/lib/python2.7/site-packages/PIL /Library/Python/2.7/site-packages/PIL
-    sudo ln -s /usr/local/lib/python2.7/site-packages/cv2.so /Library/Python/2.7/site-packages/cv2.so
-    sudo ln -s /usr/local/lib/python2.7/site-packages/cv.py /Library/Python/2.7/site-packages/cv.py
-    sudo easy_install pip
-    brew install hg
-    sudo pip install hg+http://bitbucket.org/pygame/pygame
-    curl -sO https://raw.github.com/fonnesbeck/ScipySuperpack/master/install_superpack.sh && source install_superpack.sh
-    pip install https://github.com/sightmachine/SimpleCV/zipball/master
-
-Commands (for Snow Leopard)::
-
-    mkdir ~/Code
-    cd ~/Code
-    ruby <(curl -fsSkL raw.github.com/mxcl/homebrew/go)
-    brew tap homebrew/science
-	brew install opencv
-    brew install git
-    brew install sdl sdl_image sdl_mixer sdl_ttf smpeg portmidi
-    ARCHFLAGS="-arch i386 -arch x86_64" brew install PIL
-    ln -s /usr/local/lib/python2.6/site-packages/cv.so /Library/Python/2.6/site-packages/cv.so
-    sudo ln -s /usr/local/lib/python2.6/site-packages/PIL /Library/Python/2.6/site-packages/PIL
-    sudo ln -s /usr/local/lib/python2.6/site-packages/cv2.so /Library/Python/2.6/site-packages/cv2.so
-    sudo ln -s /usr/local/lib/python2.6/site-packages/cv.py /Library/Python/2.6/site-packages/cv.py
-    sudo easy_install pip
-    brew install hg
-    sudo pip install https://bitbucket.org/pygame/pygame/get/6625feb3fc7f.zip
-    curl -sO https://raw.github.com/fonnesbeck/ScipySuperpack/master/install_superpack.sh | source install_superpack.sh
-    pip install https://github.com/sightmachine/SimpleCV/zipball/master
-
-
-<a id="windows"></a>
-### Windows 7/Vista
-If you want a streamlined install which gives you all the dependencies, we
-recommend using the Windows Superpack, available at <http://www.simplecv.org/download/>
-
-If you already have Python, OpenCV or SciPy installed and want to keep things the way you like them, follow the directions below
-
-
-#### Install Prerequisties if they aren't already installed on your system:
-
-* Install Python 2.7: http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi
-* Install Python Setup Tools for Windows: http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11.win32-py2.7.exe
-* Install the SciPy superpack: http://sourceforge.net/projects/scipy/files/scipy/0.9.0rc5/scipy-0.9.0rc5-win32-superpack-python2.7.exe/download
-* Install the NumPy superpack: http://sourceforge.net/projects/numpy/files/NumPy/1.6.2/numpy-1.6.2-win32-superpack-python2.7.exe/download
-* Install Pygame for windows: http://pygame.org/ftp/pygame-1.9.1.win32-py2.7.msi
-
-
-
-#### Install OpenCV:
-* Download OpenCV 2.3 Superpack: http://sourceforge.net/projects/opencvlibrary/files/opencv-win/2.3.1/OpenCV-2.3.1-win-superpack.exe/download
-* Run the executable file and when it ask where to extract to use::
-
-    C:\OpenCV2.3\
-
-
-* (OPTIONAL) Install MinGW for optional files and building openCV from source.  Make sure to include C/C++ Compiler and msys package.  (http://sourceforge.net/projects/mingw/files/Automated%20MinGW%20Installer/)
-
-Once these are installed you need to add Python to your Path, open a command line (start->run->cmd)::
-
-    SETX PATH C:/Python27/;C:/Python27/Scripts/;C:/OpenCV2.3/opencv/build/x86/vc10/bin/;%PATH%
-    SETX PYTHONPATH C:/OpenCV2.3/opencv/build/python/2.7/;%PYTHONPATH%
-
-Exit the command line and reopen so it loads the updated python paths, then run::
-
-    easy_install pyreadline
-    easy_install PIL
-    easy_install cython
-    easy_install pip
-    pip install ipython
-    pip install https://github.com/sightmachine/SimpleCV/zipball/1.3
-
-###Windows 8
- Step 1
- ------
-
-http://www.simplecv.org/download  => Go to this page and download SimpleCV latest stable version Superpack . It will start downloading a file named SimpleCV-(version).msi .
-This file will be around 192mb .
-
-Step 2
- ------
-
-After Downloading run the file . It will start an installation window along with a command prompt window. Give yes permission and press next . First it will install python 2.7.3 .
-Then it will install numpy,scipy,Pygame,openCV and now all the normal installation windows will be closed and still there will be command prompt running . Leave it as such it will
-download some other file like cython and when it is finished commandpromt will display a success message "SimpleCV installed successfully" "press any button in 10sec or will close
-automatically " . Now just press any button or wait for the count down .
-
- Step 3
- ------
-
- This is the final step and here we are confirming our SimpleCV installation. To do this open Python IDLE . Type in any of these two commands :
-
-      >>from SimpleCV import *
-             or
-      >>import SimpleCV
-
-If this two commands works fine without any errors our installation was successfull. If some error occurs we should uninstall and restart or check
-some forums.
-
-NOTE:- If this error is shown: "AttributeError: 'module' object has no attribute 'csgraph_to_masked'  " . Before this they will be showing list of paths of scipy library .
-The solution for this is to install latest stable version of scipy for windows . www.scipy.org/Download  => we can download latest stable version of scipy for windows here.
-
-
-
-<a id="rasppi"></a>
-#### RASPBERRY PI
-
-* [Installation instructions can be found here.](https://github.com/sightmachine/SimpleCV/blob/develop/doc/HOWTO-Install%20on%20RaspberryPi.rst)
-
----------------------------
-<a id="shell"></a>
-## SimpleCV Interactive Shell, or how to run SimpleCV
-
-
-Once you have SimpleCV installed, you can use it in a specialized [IPython](http://ipython.org)
-shell.  This pre-loads all the symbols and gives you some extra functions
-and macros for using SimpleCV.
-
-To run the SimpleCV shell, from the installation directory type:
-
-	simplecv
-
-If for some reason the shell doesn't start, you can always do so manually by running:
-
-	python -c "import SimpleCV.Shell;SimpleCV.Shell.main()"
-
-
-To run SimpleCV within an ipython notebook (ipython-notebooks are required to be installed):
-
-	simplecv notebook
-
-
-to install ipython notebooks run the following:
-
-	sudo pip install tornado
-  sudo pip install pyzmq
-
-
-
-
----------------------------
-<a id="videos"></a>
-## Videos - Tutorials and Demos
-
-Video tutorials and demos can be found at:
-<http://www.simplecv.org/learn/>
-
----------------------------
-<a id="mobile"></a>
-## SimpleCV on Mobile (Android)
-
-SimpleCV can in fact be used on a mobile device.  Although the processing requires a server to be setup that runs SimpleCV our 2012 Google Summer of Code
-student had built, we have forked the project and instructions on how to set it up and run it can be found at:
-<https://github.com/sightmachine/simplecv-mobile-camera>
-
-
-
--------------------------------
-<a id="help"></a>
-## Getting Help
-
-You can always head over to the SimpleCV help forums to ask questions:
-(SimpleCV Help Forums) - <http://help.simplecv.org>
-
---------------------
-<a id="troubleshoot"></a>
-## Troubleshooting installation problems.
-
-If for some reason the standard installation methods do not work you may have to manually install some or all of the dependencies required by SimpleCV.
-
-<a id="requirements"></a>
-### Required Libraries
-The installation instructions below should explain more on how to install.  They can also be installed manually.
-
-* Python 2.6+ (<http://www.python.org>)
-* SciPy (<http://www.scipy.org>)
-* NumPy (<http://numpy.scipy.org>)
-* Pygame (<http://www.pygame.org>)
-* OpenCV 2.3+ (<http://opencv.org>)
-* IPython 10+ (<http://ipython.org>)
-* PIL 1.1.7+ (<http://www.pythonware.com/products/pil/>)
-
-<a id="optional"></a>
-### Optional Libraries
-These libraries are NOT required to run or use SimpleCV but are needed for some of the examples if they are ran.  Some of these may be included in your systems software manager or app store.
-
-* PIP
-* BeaufitulSoup
-* webm
-* freenect (<http://openkinect.org>)
-* python nose
-* pyfirmata
-* cherrypy
-* flask
-* simplejson
-* werkzeug
-* webkit
-* gtk
-* zbar (<http://zbar.sourceforge.net/>)
-* Tesseract (<http://code.google.com/p/tesseract-ocr/>)
-* python-tesseract (<http://code.google.com/p/python-tesseract/>)
-* Orange (<http://orange.biolab.si>)
-* scikit-learn
-
-
-
-
