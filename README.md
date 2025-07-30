@@ -1,60 +1,63 @@
-# SimpleCV
+# SimpleCV（シンプルCV）
 
 > [!WARNING]  
-> This project is no longer actively maintained. For new computer vision projects, consider using alternatives like:
-> - [OpenCV](https://opencv.org/) - A powerful library for computer vision tasks with wide-ranging support and active community development.
-> - [PyTorch](https://pytorch.org/) + [TorchVision](https://pytorch.org/vision/stable/index.html) - A framework for deep learning and computer vision tasks.
-> - [TensorFlow](https://www.tensorflow.org/) - A robust ecosystem for machine learning and computer vision.
-> - [scikit-image](https://scikit-image.org/) - A lightweight image processing library for Python.
+> このプロジェクトは現在アクティブに保守されていません。新たにコンピュータビジョンのプロジェクトを始める場合は、以下の代替手段を検討してください：
+> - [OpenCV](https://opencv.org/) - 強力なコンピュータビジョンライブラリ。広範囲なサポートと活発なコミュニティによる開発があります。
+> - [PyTorch](https://pytorch.org/) + [TorchVision](https://pytorch.org/vision/stable/index.html) - ディープラーニングおよびビジョンタスクのためのフレームワーク。
+> - [TensorFlow](https://www.tensorflow.org/) - 機械学習とコンピュータビジョンのための堅牢なエコシステム。
+> - [scikit-image](https://scikit-image.org/) - Python 向けの軽量な画像処理ライブラリ。
 >
-> While there are no current plans for updates, this project may be revisited in the future. For legacy projects requiring SimpleCV, the codebase is provided as-is.
+> 現在、更新の予定はありませんが、将来的に再開される可能性はあります。レガシープロジェクトで SimpleCV が必要な場合、本コードは現状のままで提供されます。
 
 [![Build Status](https://travis-ci.org/sightmachine/SimpleCV.png?branch=develop)](https://travis-ci.org/sightmachine/SimpleCV)
 
+---
 
-Quick Links:
+## クイックリンク：
 
- * [About](#about)
- * [Installation](#installation)
-    * [Docker] (#docker)
+ * [概要（About）](#about)
+ * [インストール](#installation)
+    * [Docker](#docker)
     * [Ubuntu](#ubuntu-1204)
-    * [Virtual Environment](#virtualenv)
+    * [仮想環境](#virtualenv)
     * [Arch Linux](#arch-linux)
     * [Fedora](#fedora)
     * [MacOS](#mac-os-x-106-and-above)
     * [Windows](#windows-7vista)
     * [Raspberry Pi](#raspberry-pi)
- * [SimpleCV Shell](#simplecv-interactive-shell-or-how-to-run-simplecv)
- * [Videos & Tutorials](#videos---tutorials-and-demos)
- * [SimpleCV on Mobile - Android](#simplecv-on-mobile-android)
- * [Help](#getting-help)
- * [Troubleshooting Installation](#troubleshooting-installation-problems)
-    * [Required Libraries](#required-libraries)
-    * [Optional Libraries](#optional-libraries)
+ * [SimpleCVシェル](#simplecv-interactive-shell-or-how-to-run-simplecv)
+ * [動画 & チュートリアル](#videos---tutorials-and-demos)
+ * [モバイルでのSimpleCV（Android）](#simplecv-on-mobile-android)
+ * [ヘルプ](#getting-help)
+ * [インストール時のトラブルシューティング](#troubleshooting-installation-problems)
+    * [必須ライブラリ](#required-libraries)
+    * [オプションライブラリ](#optional-libraries)
 
+---
 
 <a id="about"></a>
-## About
----------------------------
-Make computers see with SimpleCV, the Open Source Framework for Computer Vision
+## 概要
 
-SimpleCV is a framework for Open Source Machine Vision, using OpenCV and the Python programming language.
-It provides a concise, readable interface for cameras, image manipulation, feature extraction, and format conversion.  Our mission is to give casual users a comprehensive interface for basic machine vision functions and an elegant programming interface for advanced users.
+SimpleCV はオープンソースのコンピュータビジョンフレームワークで、コンピュータに「見る」機能を与えることを目的としています。
 
-We like SimpleCV because:
+SimpleCV は OpenCV と Python をベースとしたオープンソースのマシンビジョンフレームワークです。カメラ操作、画像処理、特徴抽出、フォーマット変換などの機能に対して、簡潔で読みやすいインターフェースを提供します。初級者でも基本的な処理が書けるように設計されており、上級者には洗練されたプログラミング体験を提供します。
 
-* Even beginning programmers can write simple machine vision tests
-* Cameras, video files, images, and video streams are all interoperable
-* Information on image features can be extracted, sorted and filtered easily
-* Manipulations are fast, with easy to remember names
-* Linear algebra is strictly optional
+SimpleCV を気に入っている理由：
 
-Here is the simplecv "hello world":
+* 初心者でも簡単なマシンビジョンのテストコードが書ける
+* カメラ、動画ファイル、静止画像、映像ストリームの操作が一貫している
+* 画像から得られる情報を抽出、並び替え、フィルタするのが簡単
+* 操作が高速で、名前が覚えやすい
+* 線形代数の知識は必須ではない
 
-    import SimpleCV
-    camera = SimpleCV.Camera()
-    image = camera.getImage()
-    image.show()
+以下は SimpleCV の「Hello World」プログラムです：
+
+```python
+import SimpleCV
+camera = SimpleCV.Camera()
+image = camera.getImage()
+image.show()
+
 
 For more code snippets, we recommend the [SimpleCV examples website](http://examples.simplecv.org) or looking at our example scripts in [SimpleCV/examples](http://github.com/sightmachine/SimpleCV/tree/master/SimpleCV/examples)
 
